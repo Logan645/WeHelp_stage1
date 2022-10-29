@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>會員頁</title>
+</head>
+<body style=" justify-content:center">
+    <div style="border: solid;border-bottom: 0px; width:30% ;text-align: center;padding: 10px;">
+        <div>歡迎光臨，這是會員頁</div>
+        {{username}}，歡迎登入系統<br>
+        <a href="/signout">登出系統</a>
+    </div>
+    <div style="border: solid;border-bottom: 0px; width:30% ;text-align: center;padding: 10px;">
+        <form action="/message" method="post">
+            <div>快來留言吧</div>
+            內容<input type="text" name="message"><br>
+            <button>送出</button>
+        </form>
+    </div>
+    <div class="message" style="border: solid; width:30% ;text-align: center;padding: 10px;">
+        <div>留言區<br>
+            {{message|safe}}
+        </div>
+    </div>
+</body>
+</html>
