@@ -1,4 +1,3 @@
-from crypt import methods
 from flask import Flask, render_template, redirect, request, session
 import mysql.connector
 import os
@@ -69,13 +68,13 @@ def signout():
 @app.route('/member')
 def member():
     if 'name' in session:
-        sql="select * from message"
+        sql="select message.id, name, message from member inner join message on member.id=message.user_ID;"
         mycursor.execute(sql)
         result = mycursor.fetchall()
         result.sort(reverse = True)
         messages=''
         for i in result:
-            messages+="{}:{}<br>".format(i[3],i[4])
+            messages+="{}:{}<br>".format(i[1],i[2])
         return render_template('member.html',username=session['name'],message=messages)
     else:
         return redirect('/')
@@ -88,8 +87,8 @@ def error():
 @app.route('/message', methods=['post'] )
 def message():
     message=request.form['message']
-    sql='insert into message (user_ID, name, account, message) values(%s,%s,%s,%s)'
-    val=(session['user_ID'],session['name'],session['account'],message)
+    sql='insert into message (user_ID, message) values(%s,%s)'
+    val=(session['user_ID'], message)
     mycursor.execute(sql,val)
     mydb.commit()
     return redirect('/member')
